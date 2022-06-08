@@ -67,7 +67,7 @@ opengv::math::o3_roots( const std::vector<double> & p )
     double r3 = sqrt(pow(C3.real(),2.0)+pow(C3.imag(),2.0));
     double a3 = atan(C3.imag() / C3.real());
     if( C3.real() < 0 )
-      a3 += M_PI;
+      a3 += EIGEN_PI;
     
     double r = pow(r3,(1.0/3.0));
     C = std::complex<double>(r*cos(a3/3.0),r*sin(a3/3.0));

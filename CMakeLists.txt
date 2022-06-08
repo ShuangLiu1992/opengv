@@ -132,8 +132,7 @@ set( OPENGV_HEADER_FILES
   include/opengv/point_cloud/MAPointCloud.hpp )
 
 add_library( opengv ${OPENGV_SOURCE_FILES} ${OPENGV_HEADER_FILES} )
-add_library( random_generators test/random_generators.cpp test/random_generators.hpp test/experiment_helpers.cpp test/experiment_helpers.hpp test/time_measurement.cpp test/time_measurement.hpp )
-set_target_properties( opengv random_generators PROPERTIES
+set_target_properties( opengv PROPERTIES
                     SOVERSION ${PROJECT_VERSION}
                     VERSION ${PROJECT_VERSION} )
 
@@ -145,10 +144,14 @@ target_include_directories( opengv PUBLIC
 
 include_directories( ${CONAN_INCLUDE_DIRS_EIGEN}/unsupported )
 target_link_libraries( opengv PUBLIC Eigen3::Eigen )
-target_link_libraries( random_generators PUBLIC opengv )
 
 IF (BUILD_TESTS)
   enable_testing()
+  add_library( random_generators test/random_generators.cpp test/random_generators.hpp test/experiment_helpers.cpp test/experiment_helpers.hpp test/time_measurement.cpp test/time_measurement.hpp )
+  set_target_properties( random_generators PROPERTIES
+                      SOVERSION ${PROJECT_VERSION}
+                      VERSION ${PROJECT_VERSION} )
+  target_link_libraries( random_generators PUBLIC opengv )
 
   add_executable( test_absolute_pose test/test_absolute_pose.cpp )
   target_link_libraries( test_absolute_pose opengv random_generators )
